@@ -1,5 +1,5 @@
 # InvadeNG
-Invade Basckend application built with PHP: Slim
+Invade Backend application built with PHP: Slim
 
 Dev Entry Point: ./public/index.php
 
