@@ -181,15 +181,19 @@ class Model {
     }
 
     private function connect() {
+        // ******* Production *********
         // $servername = "localhost";
         // $username = "invadeng_invade";
         // $password = "bhADc?0a]5)S";
         // $dbname = "invadeng_invade";
+        // ******* Production *********
 
+        // ******* Local *********
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "invade";
+        // ******* Local *********
 
         // Create connection
         $this->conn = new \mysqli($servername, $username, $password, $dbname);
