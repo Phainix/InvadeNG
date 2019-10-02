@@ -11,7 +11,7 @@ Source: ./db.sql
 
 Db details: ./src/app/Library/Model.php
 
-#Run app
+# Run app
 php -S localhost:8080 -t public public/index.php
 App runs at http://localhost:8080
 
