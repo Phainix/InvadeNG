@@ -1,0 +1,97 @@
+<div class="top">
+    <a class="call" href="tel:08023456789">CALL US ON {{ settings['phone']['content'] }}</a>
+    <div class="header-actions">
+        <form action="" class="action-search">
+            <input type="text" name="" value="" placeholder="Enter...">
+            <button type="submit"><span><i class="fa fa-search"></i></span></button>
+        </form>
+        <div class="header-action" id="search-toggle"><span><i class="fa fa-search"></i></span> <span>search</span></div>
+        <a href="{{ session.user|length > 0 ? '/account/dashboard' : '/login' }}" class="header-action"><span><i class="fa fa-user"></i></span> account</a>
+        {% if session.user|length > 0 %}
+            <a href="/login" class="header-action"><span><i class="fa fa-sign-out"></i></span> logout</a>
+        {% endif %}
+    </div>
+</div>
+<div class="menu" id="sticker">
+    <a class="logo" href="/">
+        <img src="/assets/images/InvadelogoWhite.png" alt="">
+    </a>
+    <div class="menu-list">
+        <div class="menu-item has-dropdown">
+            <span class="drop-down-trigger"><a href="/">home</a></span>
+            <div class="drop-down-menu small">
+                {% for category in categories %}
+                    <div class="drop-down-item"><a href="/designs/{{ category['id'] }}?name={{ category['name'] }}">{{ category['name'] }}</a></div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="menu-item has-dropdown large">
+            <span class="drop-down-trigger">catalogue</span>
+            <div class="drop-down-menu">
+                <div class="display-menu">
+                    <div class="display-menu-list">
+                        <img src="/assets/images/InvadelogoBlack.png" class="display-logo" alt="">
+                        <div class="social-details">
+                            <a href="{{ settings['twitter']['content'] }}"><i class="fa fa-twitter"></i></a>
+                            <a href="{{ settings['facebook']['content'] }}"><i class="fa fa-facebook"></i></a>
+                            <a href="{{ settings['instagram']['content'] }}"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="display-menu-list">
+                        <div class="display-menu-item title"><a href="categories.html">Categories</a></div>
+                        {% for category in categories %}
+                            <div class="display-menu-item"><a href="/designs/{{ category['id'] }}?name={{ category['name'] }}">{{ category['name'] }}</a></div>
+                        {% endfor %}
+                    </div>
+                    <div class="display-menu-list">
+                        <div class="display-menu-item title">Information</div>
+                        <div class="display-menu-item"><a href="/pages/aboutus">About Us</a></div>
+                        <div class="display-menu-item"><a href="/contactus">Contact Us</a></div>
+                        <div class="display-menu-item"><a href="/pages/tandc">Terms & Conditions</a></div>
+                    </div>
+                    <div class="display-menu-list">
+                        <div class="display-menu-item title">Account</div>
+                        <div class="display-menu-item"><a href="account.html">My Account</a></div>
+                        <div class="display-menu-item"><a href="login.html">Log in</a></div>
+                        <div class="display-menu-item"><a href="address.html">My Addresses</a></div>
+                        <div class="display-menu-item"><a href="orders.html">My Orders</a></div>
+                        <div class="display-menu-item"><a href="designer.html">Register as a designer</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-item">blog</div>
+        <div class="menu-item"><a href="/contactus">Contact Us</a></div>
+    </div>
+    <div class="cart-preview has-dropdown">
+        <span class="drop-down-toggle"><i class="fa fa-shopping-bag"></i>MY CART: <span class="cart-size">{{ session.cart['items']|length }}</span> item(s)</span>
+        <div class="drop-down-menu small">
+            <div class="cart-drop-down-items cart-list">
+                {% for index, item in session.cart['items'] %}
+                <div class="cart-drop-down-item">
+                    <img class="product-img-thumbnail" src="{{ item.design_picture }}" alt="">
+                    <div class="product-desc">
+                        <div>{{ item.design_name }}</div>
+                        <div>{{ item.material_name }}</div>
+                        <div>₦{{ item.design_price + item.material_price }}</div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="javascript:void(0)" class="remove-from-cart" data-cart-id="{{ index }}"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="cart-drop-down-actions">
+                    
+                    <span id="cart-total-container" class="total {{ session.cart.items|length == 0 ? 'hide' : '' }}">Total price: <span class="cart-total">₦{{ session.cart['total'] }}</span></span>
+                    
+                    <span id="cart-empty" class="cart-empty total {{ session.cart.items|length > 0 ? 'hide' : '' }}">Your cart is empty</span>
+                    
+                    <a href="javascript:void(0)" title="Clear Cart" id="cart-clear"><i class="fa fa-refresh"></i></a>
+                    <a href="/cart" class="btn fill">VIEW CART</a>
+                    <a href="/cart/checkout" id="cart-checkout" class="btn fill {{ session.cart.items|length == 0 ? 'hide' : '' }}">CHECKOUT</a>
+                    <!-- |number_format(0, '.', ',') -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

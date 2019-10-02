@@ -1,0 +1,145 @@
+{% extends "app.html" %}
+
+{% block title %}Checkout{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+    <link rel="stylesheet" href="/assets/style/cart.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content checkout-content">
+<div class="basic-container">
+        <div class="breadcrumbs">
+            <span class="breadcrumb"><a href="/">Home</a></span>
+            <span class="breadcrumb"><a href="/cart">Cart</a></span>
+            <span class="breadcrumb"><a href="javascript:void(0)">Customer Information</a></span>
+            </div>
+        <div class="title mt2">SHOPPING CART</div>
+        <div class="shipping-info">
+        <div class="input-group flex-row wrap spaceb shipping-address">
+            <label for="shipping-address" class="flex100">Shipping Address</label>
+            <select name="shipping-address" id="shipping-address" class="form-input flex60">
+                <option value="" default>Select shipping address</option>
+                {% for index, address in addresses %}
+                    <option value="{{ address['id'] }}">{{ address['address']|slice(0,64) }}{{ (address['address']|length > 64) ? '...' : '' }}</option>
+                {% endfor %}
+            </select>
+            <a data-toggle="modal" data-target="#address-modal" href="javascript:void(0)" class="fill btn sm flex30"><i class="fa fa-plus"></i> new address</a>
+        </div>
+        <form action="" method="post"  class="address-modal-edit readonly" readonly>
+            <div class="input-group flex-row spaceb alignini wrap">
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                      <label for="address-fname">First Name</label>
+                      <input
+                          type="text"
+                          name="address-fname"
+                          id="register-name"
+                          class="form-input"
+                          placeholder="First Name"
+                          value="{{ session.user['first_name'] }}"
+                          readonly
+                      />
+                    </div>
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                      <label for="address-lname">Last Name</label>
+                      <input
+                          type="test"
+                          name="address-lname"
+                          id="address-lname"
+                          class="form-input"
+                          placeholder="Last Name"
+                          value="{{ session.user['last_name'] }}"
+                          readonly
+                      />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="address">Address</label>
+                    <input
+                        type="text"
+                        name="address"
+                        id="address"
+                        class="form-input"
+                        placeholder="Address"
+                        readonly
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="address-apartment">Address Line 2</label>
+                    <input
+                        type="text"
+                        name="address-line2"
+                        id="address-line2"
+                        class="form-input"
+                        placeholder="Apartment, suite etc. (optional)"
+                        readonly
+                    />
+                </div>
+                <div class="input-group flex-row spaceb alignini wrap">
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                      <label for="address-city">City</label>
+                      <input
+                        type="text"
+                        name="address-city"
+                        id="address-city"
+                        class="form-input"
+                        placeholder="City"
+                        readonly
+                      />
+                    </div>
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                      <label for="address-number">Phone Number</label>
+                      <input
+                        type="text"
+                        name="address-number"
+                        id="address-number"
+                        class="form-input"
+                        placeholder="Phone Number"
+                        value="{{ session.user['msisdn'] }}"
+                        readonly
+                      />
+                    </div>
+                </div>
+                <div class="input-group flex-row spaceb alignini wrap">
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0" id="address-country-container">
+                      <label for="address-country">Country</label>
+                      <select name="address-country" id="address-country" class="form-input address-country" readonly>
+                        <option default value="">Select country</option>
+                        <option value="nigeria">Nigeria</option>
+                        <option value="african">Other African Country</option>
+                        <option value="others">Other Non African Country</option>
+                      </select>
+                    </div>
+                    <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0">
+                      <label for="address-postal">Postal</label>
+                      <input
+                        type="text"
+                        name="address-postal"
+                        id="address-postal"
+                        class="form-input"
+                        placeholder="Postal Code"
+                        readonly
+                      />
+                    </div>
+                </div>
+            <div class="input-group flex-row spaceb">
+                <a href="/cart"><i class="fa fa-angle-left"></i> &nbsp; Return to cart</a>
+                <a id="shipping-info-btn" disabled href="javascript:void(0)" class="fill btn sm">continue to shipping information</a>
+            </div>
+        </form>
+        </div>
+        
+    </div>
+    {{ include('checkout-products.html') }}
+    {% for index, address in addresses %}
+        <div class="hide" id="address{{address['id']}}">
+            {{ address|json_encode }}
+        </div>
+    {% endfor %}
+    <div class="hide" id="address0">
+        {"id":"","fname":"","lname":"","address":"","address_line2":"","city":"","msisdn":"","country_type":"","country":"","state":"","postal_code":"","is_default":"","user_id":"","date_created":"","date_updated":""}
+    </div>
+</section>
+{% endblock %}
+{% block foot %}
+<script src="/assets/form.js"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "app.html" %}
+
+{% block title %}{{ page['title'] }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+        <div class="breadcrumbs">
+          <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+          <span class="breadcrumb"><a href="javascript:void(0)">{{ page['title'] }}</a></span>
+        </div>
+        <div class="basic-container">
+              <div class="title">
+                {% apply upper %}
+                  {{ page['title'] }}
+                {%  endapply %}
+              </div>
+              <div class="about-container">
+                  {{ page['content']|raw }}
+              </div>
+        </div>
+      </section>
+{% endblock %}
+{% block foot %}
+{% endblock %}

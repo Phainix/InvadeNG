@@ -1,0 +1,50 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <section class="row">
+        <div class="col-sm-12">
+            <section class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card mb-12">
+                        <div class="card-block">
+                            <h3 class="card-title">Update Categories</h3>
+                            <!-- <div class="dropdown card-title-btn-container">
+                                <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em></button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#"><em class="fa fa-search mr-1"></em> More info</a>
+                                    <a class="dropdown-item" href="#"><em class="fa fa-thumb-tack mr-1"></em> Pin Window</a>
+                                    <a class="dropdown-item" href="#"><em class="fa fa-remove mr-1"></em> Close Window</a></div>
+                            </div> -->
+                            <ul class="todo-list mt-2 mb-2">
+                                {% for category in categories %}
+                                    <li class="todo-list-item">
+                                        <div class="checkbox mt-1 mb-2">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input checkbox-toggle" id="customCheck{{ category['id'] }}" {{ category['status'] == 2 ? 'checked' : '' }} data-toggle-link="/backend/account/categories/toggle/{{ category['id'] }}/{{ category['status'] == 1 ? '2' : '1' }}">
+                                                <label class="custom-control-label custom-control-description" for="customCheck{{ category['id'] }}">{{ category['name'] }}</label>
+                                            <div class="float-right action-buttons"><a href="/backend/account/categories/delete/{{ category['id'] }}" class="trash"><em class="fa fa-trash"></em></a></div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="card-footer todo-list-footer">
+                                <form class="category-form" action="/backend/account/categories" novalidate method="post">
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <button type="submit" class="btn btn-primary btn-md" id="btn-todo">Add</button>
+                                    </span>
+                                    <input id="btn-input" type="text" class="form-control input-md" placeholder="Add new category" name="category"/><span class="input-group-btn">
+                                    </span>
+                                </div>
+                                <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

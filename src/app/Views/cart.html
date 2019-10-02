@@ -1,0 +1,52 @@
+{% extends "app.html" %}
+
+{% block title %}Car{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="breadcrumbs">
+        <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+        <span class="breadcrumb"><a href="javascript:void(0)">Shopping cart</a></span>
+    </div>
+    <div class="basic-container">
+            <div class="title">SHOPPING CART</div>
+            <div class="cart-view cart-list">
+                <div class="cart-view-item heading" id="cart-view-item-heading">
+                    <div class="cart-product">Details</div>
+                    <div class="cart-price">Design</div>
+                    <div class="cart-material">Material</div>
+                    <div class="cart-item-total">Total</div>
+                </div> 
+                {% for index, item in session.cart['items'] %}
+                <div class="cart-view-item cart-display">
+                    <div class="cart-product">
+                        <img class="cart-view-img" src="{{ item.design_picture }}" alt="">
+                        <div class="cart-view-desc">
+                            <div><b>{{ item.design_name }}</b></div>
+                            <div>Material: {{ item.material_name }}</div>
+                            <button class="btn fill sm remove-from-cart" data-cart-id="{{ index }}">remove</button>
+                        </div>
+                    </div>
+                    <div class="cart-price">₦{{ item.design_price }}</div>
+                    <div class="cart-material">₦{{ item.material_price }}</div>
+                    <div class="cart-item-total">₦{{ item.design_price + item.material_price }}</div>
+                </div>
+                {% endfor %}
+                <div id="cart-empty" class="cart-empty total {{ session.cart.items|length > 0 ? 'hide' : '' }}">Your cart is empty</div>
+                <div class="cart-view-item">
+                    <div class="cart-product">Total price</div>
+                    <div class="cart-price"></div>
+                    <div class="cart-material"></div>
+                    <div class="cart-total cart-item-total">₦{{ session.cart['total'] }}</div>
+                </div>
+                <div class="cart-view-bottom">
+                    <a class="btn fill" href="/designs/">CONTINUE SHOPPING</a>
+                    <a {{ session.cart.items|length == 0 ? 'disabled' : '' }} class="btn fill" href="{{ session.cart.items|length == 0 ? 'javascript:void(0)' : '/cart/checkout' }}">CHECKOUT</a>
+                </div>
+
+            </div>
+    </div>
+</section>
+{% endblock %}

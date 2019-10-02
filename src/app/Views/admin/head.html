@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/admin/images/favicon.ico">
+	<title>Invade Backend</title>
+
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+
+	<!-- Bootstrap core CSS -->
+	<link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Icons -->
+	<!-- <link href="/admin/css/font-awesome.css" rel="stylesheet"> -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"> 
+	
+	<link href="/admin/summernote/summernote-bs4.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/admin/css/style.css" rel="stylesheet">
+	
+</head>
+<body>
+	{% if(session.alert|length > 0) %}
+		<div class="abs-alert alert bg-{{ session.get('alert')['type'] }}">{{ session.get('alert')['message'] }}</div>
+		{{ session.del('alert') }}
+	{% endif %}

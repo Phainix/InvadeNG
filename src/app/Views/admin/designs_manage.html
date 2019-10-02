@@ -1,0 +1,118 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Designs{% endblock %}
+
+{% block content %}
+<section class="row">
+    <div class="col-sm-12">
+        <section class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <h3 class="card-title">Inputs</h3>
+                        <form enctype="multipart/form-data" class="form design-form" action="/backend/account/designs/manage" novalidate method="post">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="design-name" class="form-control" value="{{ design.name }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Description</label>
+                                    <div class="col-md-9">
+                                        <textarea name="design-desc" id="design-desc" cols="30" rows="4" class="form-control">{{ design.description }}</textarea>
+                                    </div>
+                                </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Price</label>
+                                <div class="col-md-9">
+                                    <input type="number" name="design-price" class="form-control" value="{{ design.price }}">
+                                </div>
+                            </div>
+                            {% if design_id != 0 %}
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Sale Price</label>
+                                    <div class="col-md-9">
+                                        <input type="number" name="design-sale-price" class="form-control" value="{{ design.sale_price }}">
+                                    </div>      
+                                </div>
+                            {% endif %}
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Category</label>
+                                <div class="col-md-9">
+                                    <select class="custom-select form-control" name="design-category">
+                                        <option value="" default>Select Category</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category['id'] }}" {{ category['id'] == design.category_id ? 'selected' : '' }}>{{ category['name'] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Picture</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="file" name="design-picture" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-md radius-sm btn-add-picture" id="btn-todo" data-other-pictures="0" type="button">
+                                                <em class="fa fa-plus"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <span class="help-block">You can upload a maximum of 5 images.</span>
+                                    <div class="input-group mt-2 d-none" id="design-other-picture1">
+                                        <input type="file" name="design-other-picture1" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-md radius-sm btn-rm-picture" id="btn-todo" type="button">
+                                                <em class="fa fa-minus"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mt-2 d-none" id="design-other-picture2">
+                                        <input type="file" name="design-other-picture2" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-md radius-sm btn-rm-picture" id="btn-todo" type="button">
+                                                <em class="fa fa-minus"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mt-2 d-none" id="design-other-picture3">
+                                        <input type="file" name="design-other-picture3" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-md radius-sm btn-rm-picture" id="btn-todo" type="button">
+                                                <em class="fa fa-minus"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mt-2 d-none" id="design-other-picture4">
+                                        <input type="file" name="design-other-picture4" class="form-control" type="button">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary btn-md radius-sm btn-rm-picture" id="btn-todo">
+                                                <em class="fa fa-minus"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-froup row">
+                                <span class="col-md-3"></span>
+                                <span class="col-md-9">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ design_id == 0 ? 'Create' : 'Edit' }}</button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                            <input type="hidden" name="design_id" value="{{ design_id }}">
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 mt-1 mb-4"><small> Template by <a href="https://www.medialoot.com">Medialoot</a></small></div>
+        </section>
+    </div>
+</section>
+{% endblock %}

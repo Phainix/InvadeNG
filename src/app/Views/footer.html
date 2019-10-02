@@ -1,0 +1,33 @@
+<div class="footer-menu">
+    <div class="footer-menu-list">
+        <img src="/assets/images/InvadelogoWhite.png" class="footer-logo" alt="">
+        <div class="social-details">
+            <a href="{{ settings['twitter']['content'] }}"><i class="fa fa-twitter"></i></a>
+            <a href="{{ settings['facebook']['content'] }}"><i class="fa fa-facebook"></i></a>
+            <a href="{{ settings['instagram']['content'] }}"><i class="fa fa-instagram"></i></a>
+        </div>
+    </div>
+    <div class="footer-menu-list">
+        <div class="footer-menu-item title"><a href="categories.html">Categories</a></div>
+        {% for category in categories %}
+            <div class="footer-menu-item"><a href="/designs/{{ category['id'] }}?name={{ category['name'] }}">{{ category['name'] }}</a></div>
+        {% endfor %}
+    </div>
+    <div class="footer-menu-list">
+        <div class="footer-menu-item title">Information</div>
+        <div class="footer-menu-item"><a href="/pages/aboutus">About Us</a></div>
+        <div class="footer-menu-item"><a href="/contactus">Contact Us</a></div>
+        <div class="footer-menu-item"><a href="/pages/tandc">Terms & Conditions</a></div>
+    </div>
+    <div class="footer-menu-list">
+        <div class="footer-menu-item title">Account</div>
+        <div class="footer-menu-item"><a href="account.html">My Account</a></div>
+        <div class="footer-menu-item"><a href="login.html">Log in</a></div>
+        <div class="footer-menu-item"><a href="address.html">My Addresses</a></div>
+        <div class="footer-menu-item"><a href="orders.html">My Orders</a></div
+        <div class="footer-menu-item"><a href="designer.html">Register as a designer</a></div>
+    </div>
+</div>
+<div class="footer-info">
+    <div>&copy; Invade NG. Powered by NIX</div>
+</div>

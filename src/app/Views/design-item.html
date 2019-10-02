@@ -1,0 +1,27 @@
+<div class="{{ design_class }}">
+    <img class="popular-product-img" src="{{ design['picture'] }}" alt="">
+    <div class="popular-product-desc">
+        <div>
+            <a href="/designs/view/{{ design['id'] }}?product={{ design['name'] }}"><b>{{ design['name'] }}</b></a>
+        </div>
+        <div>
+            <span class="price">
+                ₦{{ (design['sale_price'] == 0) ? (design['price']|number_format(0, '.', ',')) :  (design['sale_price']|number_format(0, '.', ',')) }}
+                <small class="strike-through">
+                    {{ (design['sale_price'] == 0) ? '' :  '₦' ~ (design['price']|number_format(0, '.', ',')) }}
+                </small>
+            </span>
+        </div>
+        <div class="popular-product-actions">
+            <a class="add-to-cart" href="javascript:void(0)" data-target="#add-to-cart" data-toggle="modal" data-product-id="{{ design['id'] }}"><span><i class="fa fa-shopping-cart"></i></span> Add to cart</a>
+            <!-- <span><i class="fa fa-heart-o"></i></span> -->
+        </div>
+    </div>
+    <div class="popular-product-overlay">
+        <div>new</div>
+        <div title="Add to Wishlist" data-target="#modal" data-toggle="modal"><i class="fa fa-search"></i></div>
+    </div>
+    <div class="hide" id="product-desc-{{ design['id'] }}">
+        {{ design | json_encode }}
+    </div>
+</div>

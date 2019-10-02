@@ -1,0 +1,59 @@
+{% extends "app.html" %}
+
+{% block title %}Shipping{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+    <link rel="stylesheet" href="/assets/style/cart.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content checkout-content">
+    <div class="basic-container">
+            <div class="breadcrumbs">
+                <span class="breadcrumb"><a href="/">Home</a></span>
+                <span class="breadcrumb"><a href="/cart">Cart</a></span>
+                <span class="breadcrumb"><a href="/cart/checkout">Customer Information</a></span>
+                <span class="breadcrumb"><a href="javascript:void(0)">Shipping</a></span>
+                </div>
+            <div class="title mt2">SHIPPING</div>
+            <div class="info">
+                <div class="bordered-box padded">
+                    <div class="border-bottom">
+                        <span class="flex20">Contact</span>
+                        <span  class="flex80">{{ session.cart['address']['msisdn']  }}</span>
+                    </div>
+                    <div>
+                        <span class="flex20">Ship to</span>
+                        <span class="flex80">{{ session.cart['address']['address'] }}</span>
+                    </div>
+                </div>
+                <div class="title">shipping method</div>
+                <div class="bordered-box">
+                    {% for price, item in shipping_categories %}
+                    <div class="border-bottom">
+                        <span class="flex10"><input type="radio" name="shipping-method" id="" value="{{ price }}"></span>
+                        <span  class="flex80">{{ item|join(', ') }}</span>
+                        <span  class="flex10">₦{{ price }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="title">express shipping</div>
+                <div class="bordered-box">
+                    <div class="border-bottom">
+                        <span class="flex10"><input type="checkbox" name="express-shipping" id="" value="{{ session.cart['design_total'] * 0.6 }}"></span>
+                        <span  class="flex80">Express shipping (Order is shipped out in 1 week)</span>
+                        <span  class="flex10">₦{{ session.cart['design_total'] * 0.6 }}</span>
+                    </div>
+                </div>
+                <div class="input-group flex-row spaceb">
+                    <a href="/cart/checkout"><i class="fa fa-angle-left"></i> &nbsp; Return to customer information</a>
+                    <a href="javascript:void(0)" disabled class="fill btn sm" id="shipping-method-btn">continue to payment method</a>
+                </div>
+            </div>
+            
+    </div>
+    {{ include('checkout-products.html') }}
+</section>
+{% endblock %}
+{% block foot %}
+<script src="/assets/form.js"></script>
+{% endblock %}

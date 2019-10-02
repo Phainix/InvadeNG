@@ -1,0 +1,98 @@
+{% extends "app.html" %}
+
+{% block title %}Home{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="assets/style/main.css" />
+{% endblock %}
+{% block content %}
+    <section class="main-content">
+      <div class="breadcrumbs">
+        <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+        <span class="breadcrumb"><a href="javascript:void(0)">Login</a></span>
+      </div>
+      <div class="auth-container">
+        <div class="register auth">
+          <small>New here?</small>
+          <form action="register" method="post" class="register-form" novalidate>
+                <div class="input-group">
+                    <label for="register-name">Full Name</label>
+                    <input
+                        type="text"
+                        name="register-name"
+                        id="register-name"
+                        class="form-input"
+                        placeholder="Format: Firstname Surname"
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="register-email">Email Address</label>
+                    <input
+                        type="email"
+                        name="register-email"
+                        id="register-email"
+                        class="form-input"
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="register-number">Phone Number</label>
+                    <input
+                        type="text"
+                        name="register-number"
+                        id="register-number"
+                        class="form-input"
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="register-password">Password</label>
+                    <input
+                        type="password"
+                        name="register-password"
+                        id="register-password"
+                        class="form-input"
+                    />
+                </div>
+                <div class="input-group flex-row">
+                    <button class="fill btn" type="submit">REGISTER</button>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <a href="forgot.html">Forgot your password?</a>
+                </div>
+                <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+            </form>
+        </div>
+        <div class="login auth">
+            <small>Already registered?</small>
+            <form action="/login" method="post" class="login-form">
+                <div class="input-group">
+                    <label for="login-email">Email Address</label>
+                    <input
+                        type="email"
+                        name="login-email"
+                        id="login-email"
+                        class="form-input"
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input
+                        type="password"
+                        name="login-password"
+                        id="login-password"
+                        class="form-input"
+                    />
+                </div>
+                <div class="input-group flex-row">
+                    <button class="fill btn">LOGIN</button>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <a href="/forgot">Forgot your password?</a>
+                </div>
+                <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+            </form>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+{% block foot %}
+    <script src="/assets/form.js"></script>
+{% endblock %}

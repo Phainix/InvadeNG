@@ -1,0 +1,504 @@
+<div
+  id="add-to-cart"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button
+          type="button"
+          class="abs close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="quickview">
+          <div class="quickview-image-container">
+            <div class="quickview-product-thumbnails no-scroll" id="add-to-cart-thumbnail">
+              
+            </div>
+            <img
+              class="quickview-product-image"
+              src=""
+              alt=""
+              id="add-to-cart-image"
+            />
+          </div>
+          <div class="quickview-desc-container">
+            <div class="title" id="add-to-cart-title">
+              
+            </div>
+            <div class="avail">
+              Availability: <span class="text-success">Available</span>
+            </div>
+            <div class="quickview-pricing">
+              <div>
+                <span class="quickview-price" id="add-to-cart-price"></span>
+                <span class="strike-through" id="add-to-cart-old-price"></span>
+              </div>
+              <div class="quickview-discount" id="add-to-cart-discount">
+                - 2 %
+              </div>
+            </div>
+            <div class="quickview-desc" id="add-to-cart-desc">
+            </div>
+            <div class="quickview-details">
+              <div>Category: <span id="add-to-cart-category"></span></div>
+            </div>
+            <div class="quickview-actions">
+              <div class="quickview-material">
+                <button
+                  class="btn fill sm"
+                  href="javascript:void(0)"
+                  data-target="#material"
+                  data-toggle="modal"
+                >
+                  select material
+                </button>
+                &nbsp; <span id="add-to-cart-material">No material selected</span>
+              </div>
+            </div>
+            <button class="btn sm fill" id="add-to-cart-trigger">add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="material"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select Material</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="quickview">
+          <div class="materials">
+            {% for material in materials%}
+              <div class="material material-item" data-id="{{ material['id'] }}" data-name="{{ material['name'] }}">
+                <img
+                  src="{{ material['picture1'] }}"
+                  alt=""
+                  class="material-img"
+                />
+                <span class="material-desc d-flex flex-row spaceb aligncen">
+                  <span>
+                    {{ material['name'] }}
+                  </span> 
+                  <span class="price">
+                    ₦{{ (material['sale_price'] == 0) ? (material['price']|number_format(0, '.', ',')) :  (material['sale_price']|number_format(0, '.', ',')) }}
+                    <small class="strike-through">
+                        {{ (material['sale_price'] == 0) ? '' :  '₦' ~ (material['price']|number_format(0, '.', ',')) }}
+                    </small>
+                  </span>
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="edit-details"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit details</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/account/edit_details" method="post" class="w40 edit-details-form" novalidate>
+              <div class="input-group">
+                  <label for="edit-name">Full Name</label>
+                  <input
+                      type="text"
+                      name="edit-name"
+                      id="edit-name"
+                      class="form-input"
+                      value="{{ session.user['first_name'] ~ ' ' ~ session.user['last_name'] }}"
+                  />
+              </div>
+              <div class="input-group">
+                  <label for="edit-email">Email Address</label>
+                  <input
+                      type="email"
+                      name="edit-email"
+                      id="edit-email"
+                      class="form-input"
+                      value="{{ session.user['email'] }}"
+                  />
+              </div>
+              <div class="input-group">
+                  <label for="edit-number">Phone Number</label>
+                  <input
+                      type="text"
+                      name="edit-number"
+                      id="edit-number"
+                      class="form-input"
+                      value="{{ session.user['msisdn'] }}"
+                  />
+              </div>
+              <div class="input-group flex-row">
+                  <button class="fill sm btn" type="submit">edit</button>
+              </div>
+              <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+              <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="change-password"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/account/change_password" method="post" class="w40 change-password-form">
+              <div class="input-group">
+                  <label for="current-password">Current Password</label>
+                  <input
+                      type="password"
+                      name="current-password"
+                      id="current-password"
+                      class="form-input"
+                      value=""
+                  />
+              </div>
+              <div class="input-group">
+                  <label for="new-password">New Password</label>
+                  <input
+                      type="password"
+                      name="new-password"
+                      id="new-password"
+                      class="form-input"
+                      value=""
+                  />
+              </div>
+              <div class="input-group">
+                  <label for="confirm-password">Confirm Password</label>
+                  <input
+                      type="password"
+                      name="confirm-password"
+                      id="confirm-password"
+                      class="form-input"
+                      value=""
+                  />
+              </div>
+              <div class="input-group flex-row">
+                  <button class="fill sm btn">update</button>
+              </div>
+              <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+              <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div
+  id="address-modal-edit"
+  class="modal fade address-modal-edit"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/account/addresses/manage" method="post" class="w40 w85sm address-form-edit">
+              
+            <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-fname">First Name</label>
+                <input
+                    type="text"
+                    name="address-fname"
+                    id="register-name"
+                    class="form-input"
+                    placeholder="First Name"
+                    value="{{ session.user['first_name'] }}"
+                />
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-lname">Last Name</label>
+                <input
+                    type="test"
+                    name="address-lname"
+                    id="address-lname"
+                    class="form-input"
+                    placeholder="Last Name"
+                    value="{{ session.user['last_name'] }}"
+                />
+              </div>
+          </div>
+          <div class="input-group">
+              <label for="address">Address</label>
+              <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  class="form-input"
+                  placeholder="Address"
+              />
+          </div>
+          <div class="input-group">
+              <label for="address-apartment">Address Line 2</label>
+              <input
+                  type="text"
+                  name="address-line2"
+                  id="address-line2"
+                  class="form-input"
+                  placeholder="Apartment, suite etc. (optional)"
+              />
+          </div>
+          <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-city">City</label>
+                <input
+                  type="text"
+                  name="address-city"
+                  id="address-city"
+                  class="form-input"
+                  placeholder="City"
+                />
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-number">Phone Number</label>
+                <input
+                  type="text"
+                  name="address-number"
+                  id="address-number"
+                  class="form-input"
+                  placeholder="Phone Number"
+                  value="{{ session.user['msisdn'] }}"
+                />
+              </div>
+          </div>
+          <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0" id="address-country-container">
+                <label for="address-country">Country</label>
+                <select name="address-country" id="address-country" class="form-input address-country">
+                  <option default value="">Select country</option>
+                  <option value="nigeria">Nigeria</option>
+                  <option value="african">Other African Country</option>
+                  <option value="others">Other Non African Country</option>
+                </select>
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0">
+                <label for="address-postal">Postal</label>
+                <input
+                  type="text"
+                  name="address-postal"
+                  id="address-postal"
+                  class="form-input"
+                  placeholder="Postal Code"
+                />
+              </div>
+          </div>
+              
+              <div class="input-group flex-row">
+                  <button class="fill sm btn">edit</button>
+              </div>
+              <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+              <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+              <input type="hidden" name="address-id" value="" id="address-id">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div
+  id="address-modal"
+  class="modal fade address-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby=""
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Address</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/account/addresses/new" method="post" class="w40 w85sm address-form">
+              
+            <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-fname">First Name</label>
+                <input
+                    type="text"
+                    name="address-fname"
+                    id="register-name"
+                    class="form-input"
+                    placeholder="First Name"
+                    value="{{ session.user['first_name'] }}"
+                />
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-lname">Last Name</label>
+                <input
+                    type="test"
+                    name="address-lname"
+                    id="address-lname"
+                    class="form-input"
+                    placeholder="Last Name"
+                    value="{{ session.user['last_name'] }}"
+                />
+              </div>
+          </div>
+          <div class="input-group">
+              <label for="address">Address</label>
+              <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  class="form-input"
+                  placeholder="Address"
+              />
+          </div>
+          <div class="input-group">
+              <label for="address-apartment">Address Line 2</label>
+              <input
+                  type="text"
+                  name="address-line2"
+                  id="address-line2"
+                  class="form-input"
+                  placeholder="Apartment, suite etc. (optional)"
+              />
+          </div>
+          <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-city">City</label>
+                <input
+                  type="text"
+                  name="address-city"
+                  id="address-city"
+                  class="form-input"
+                  placeholder="City"
+                />
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-0">
+                <label for="address-number">Phone Number</label>
+                <input
+                  type="text"
+                  name="address-number"
+                  id="address-number"
+                  class="form-input"
+                  placeholder="Phone Number"
+                  value="{{ session.user['msisdn'] }}"
+                />
+              </div>
+          </div>
+          <div class="input-group flex-row spaceb alignini wrap">
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0" id="address-country-container">
+                <label for="address-country">Country</label>
+                <select name="address-country" id="address-country" class="form-input address-country">
+                  <option default value="">Select country</option>
+                  <option value="nigeria">Nigeria</option>
+                  <option value="african">Other African Country</option>
+                  <option value="others">Other Non African Country</option>
+                </select>
+              </div>
+              <div class="input-group flex47-5 flex100sm d-flex flex-column marg-t-0">
+                <label for="address-postal">Postal</label>
+                <input
+                  type="text"
+                  name="address-postal"
+                  id="address-postal"
+                  class="form-input"
+                  placeholder="Postal Code"
+                />
+              </div>
+          </div>
+              
+              <div class="input-group flex-row">
+                  <button class="fill sm btn">create</button>
+              </div>
+              <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+              <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

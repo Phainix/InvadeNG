@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width">
+        <title>Invade | {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="/assets/plugins/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/plugins/flickity.min.css" />
+        <link rel="stylesheet" href="/assets/style/style.css" />
+        {% block head %}
+        {% endblock %}
+        <link
+        href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:700|Alegreya+Sans:400,600"
+        rel="stylesheet"
+        />
+        <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="/assets/style/responsive.css" />
+        <style>
+        /* The sticky class is added to the header with JS when it reaches its scroll position */
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+            padding-top: 102px;
+        }
+        </style>
+    </head>
+    <body class="{{ body }}">
+        <header class="title" id="header">
+            {{ include('header.html') }}
+        </header>
+        {% if(session.alert|length > 0) %}
+            <div class="alert {{ session.alert['type'] }}">{{ session.alert['message'] }}</div>
+            {{ session.del('alert') }}
+        {% endif %}
+        <div class="alert hide" id="js-alert"></div>
+        {% block content %}
+        {% endblock %}
+        <footer id="footer">
+            {{ include('footer.html') }}
+        </footer>
+        {{ include('modals.html') }}
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"
+        ></script>
+        <script src="/assets/plugins/jquery.sticky.js"></script>
+        <script src="/assets/plugins/bootstrap.min.js"></script>
+        <script src="/assets/plugins/flickity.pkgd.min.js"></script>
+        <script src="/assets/app.js"></script>
+        {% block foot %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,70 @@
+{{ include('admin/head.html') }}
+	<div class="container-fluid" id="wrapper">
+		<div class="row">
+			<nav class="sidebar col-xs-12 col-sm-3 col-lg-2 col-xl-2">
+                <h1 class="site-title home-page"><a href="/backend"><img class="img-fluid" src="/assets/images/InvadelogoWhite.png" alt=""></a></h1>
+            </nav>
+			<main class="col-xs-12 col-sm-9 col-lg-10 col-xl-10 pt-3 pl-4 ml-auto">
+				<header class="page-header row justify-center">
+					<div class="col-md-6 col-lg-8" >
+						<h1 class="float-left text-center text-md-left">Login</h1>
+					</div>
+					<div class="clear"></div>
+				</header>
+				<section class="row">
+					<div class="col-sm-12">
+						<section class="row">
+							<div class="col-12">
+								<div class="card mb-4">
+									<div class="card-block">
+										<h3 class="card-title">Inputs</h3>
+										<form class="form login-form" action="/backend/login" novalidate method="post">
+											<div class="form-group row">
+												<label class="col-md-3 col-form-label">Email</label>
+												<div class="col-md-9">
+                                                    <input type="email" name="login-email" class="form-control">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-md-3 col-form-label">Password</label>
+												<div class="col-md-9">
+													<input class="form-control" type="password" name="login-password">
+												</div>
+                                            </div>
+                                            <div class="form-froup row">
+                                                <span class="col-md-3"></span>
+                                                <span class="col-md-9">
+                                                    <button type="submit" class="btn btn-lg btn-primary">Login</button>
+                                                </span>
+                                            </div>
+                                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                            
+											<!-- <div class="form-group row">
+												<label class="col-md-3 col-form-label">Valid Input</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control is-valid" id="inputHorizontalSuccess">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-md-3 col-form-label">Danger</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control is-invalid" id="inputHorizontalDnger">
+													<div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+													<small class="form-text text-muted">Example help text that remains unchanged.</small></div>
+                                                    <span class="help-block">Email invalid please try again.</span>
+											</div> -->
+										</form>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section class="row">
+							<div class="col-12 mt-1 mb-4"><small> Template by <a href="https://www.medialoot.com">Medialoot</a></small></div>
+						</section>
+					</div>
+				</section>
+			</main>
+		</div>
+	</div>
+{{ include('admin/foot.html') }}

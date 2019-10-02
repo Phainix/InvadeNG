@@ -1,0 +1,53 @@
+{% extends "app.html" %}
+
+{% block title %}Addresses{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="breadcrumbs">
+      <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+      <span class="breadcrumb"><a href="/account/dashboard">Account</a></span>
+    </div>
+    <div class="d-flex spaceb flex-row aligncen">
+        <div class="title">
+          ADDRESSES
+        </div>
+
+        <!-- <a href="login.html" class="btn xsm fill">back to account</a> -->
+        <a data-toggle="modal" data-target="#address-modal" href="javascript:void(0)" class="btn xsm fill">new address</a>
+      </div>
+      <div class="d-flex flex-row spaceb wrap">
+        {% for address in addresses %}
+            <div class="bordered-box bordered-top-box flex47-5 flex100sm">
+                <div class="d-flex flex-row spaceb aligncen padd-lr-0">
+                    <small>{{ address['fname'] ~ ' ' ~ address['lname']  ~ ' ' }}</small>
+                    <div>
+                    <a data-toggle="modal" data-target="#address-modal-edit" href="javascript:void(0)" class="btn xsm fill address-edit" data-id="{{ address['id'] }}"><i class="fa fa-pencil fa-norm"></i> &nbsp; edit</a>
+                    <!-- <a data-toggle="modal" data-target="#delete" href="javascript:void(0)" class="btn xsm fill"><i class="fa fa-trash fa-norm"></i> &nbsp; delete</a> -->
+                    </div>
+                </div>
+                <div class="d-flex flex-row aligncen padd-lr-0">
+                    <span><i class="fa fa-user fa-round"></i></span>
+                    <span>{{ address['fname'] ~ ' ' ~ address['lname'] }}</span>
+                </div>
+                <div class="d-flex flex-row aligncen padd-lr-0">
+                    <span><i class="fa fa-home fa-round"></i></span>
+                    <span>{{ address['address'] }}</span>
+                </div>
+                <div class="d-flex flex-row aligncen padd-lr-0">
+                    <span><i class="fa fa-phone fa-round"></i></span>
+                    <span>{{ address['msisdn'] }}</span>
+                </div>
+                <div class="hide" id="address{{address['id']}}">
+                    {{ address|json_encode }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+{% block foot %}
+<script src="/assets/form.js"></script>
+{% endblock %}

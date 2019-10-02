@@ -1,0 +1,101 @@
+{% extends "app.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <section class="banner">
+      <div
+        class="main-carousel"
+        data-flickity='{ "cellAlign": "left", "contain": true, "wrapAround": true, "fade": false, "pageDots": false }'
+      >
+        {% for banner in banners %}
+          <div class="carousel-cell banner-item">
+            <img
+              src="{{ banner['image'] }}"
+              alt=""
+            />
+            <div class="banner-desc">
+              <div class="title">
+                {% apply upper %}
+                  {{ banner['title'] }}
+                {% endapply %}
+              </div>
+              <div class="big">{{ banner['description'] }}</div>
+              <a class="btn fill" href="{{ banner['link'] }}">{{ banner['btn_text'] }}</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="product-groups">
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Men Apparel</h4>
+        <button class="btn bordered">SHOP NOW</button>
+      </div>
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Women Apparel</h4>
+        <button class="btn bordered">SHOP NOW</button>
+      </div>
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Shoes & Bags</h4>
+        <a class="btn bordered">SHOP NOW</a>
+      </div>
+    </section>
+    <section class="category-list-container">
+      <div class="category-list">
+        <div class="category-item title">CATEGORIES</div>
+        {% for category in categories %}
+            <div class="category-item"><a href="/designs/{{ category['id'] }}?name={{ category['name'] }}">{{ category['name'] }}</a></div>
+        {% endfor %}
+      </div>
+      <div class="show-now">
+        <h2>INVADE SUPER SALE</h2>
+        <button class="btn fill">SHOP &nbsp; NOW</button>
+      </div>
+    </section>
+    <section class="popular-products">
+      <div class="title">FEATURED DESIGNS</div>
+      {% for design in featured %}
+          {% set design_class = 'popular-product' %}
+          {{ include('design-item.html') }}
+      {% endfor %}
+    </section>
+    <section class="promo-banner">
+      <div class="title">BRAND NEW ITEMS!</div>
+      <h1>
+        Don't miss your chance to be the first! <br />
+        FREE SHIPPING with purchase!
+      </h1>
+      <button class="btn bordered">SHOP NOW</button>
+    </section>
+    <section class="product-main-categories">
+      <div class="product-main-category">
+        <h1 class="title">Invade Luxury</h1>
+        <button class="btn fill">SHOP &nbsp; NOW</button>
+      </div>
+      <div class="product-main-category">
+        <h1 class="title">Invade Fashion</h1>
+        <button class="btn fill">SHOP &nbsp; NOW</button>
+      </div>
+    </section>
+    <section class="product-groups">
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Men Apparel</h4>
+        <button class="btn bordered">SHOP NOW</button>
+      </div>
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Women Apparel</h4>
+        <button class="btn bordered">SHOP NOW</button>
+      </div>
+      <div class="product-group">
+        <div class="title">NEW ARRIVALS</div>
+        <h4 class="big">Shoes & Bags</h4>
+        <a class="btn bordered">SHOP NOW</a>
+      </div>
+    </section>
+    <section class="footer-banner"></section>
+{% endblock %}

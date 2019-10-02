@@ -1,0 +1,100 @@
+{% extends "app.html" %}
+
+{% block title %}Payment{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+    <link rel="stylesheet" href="/assets/style/cart.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content checkout-content">
+    <div class="basic-container">
+            <div class="breadcrumbs">
+                <span class="breadcrumb"><a href="/">Home</a></span>
+                <span class="breadcrumb"><a href="/cart">Cart</a></span>
+                <span class="breadcrumb"><a href="/cart/checkout">Customer Information</a></span>
+                <span class="breadcrumb"><a href="/cart/shipping">Shipping</a></span>
+                <span class="breadcrumb"><a href="javascript:void(0)">Payment</a></span>
+                </div>
+            <div class="title mt2">PAYMENT</div>
+            <div class="info">
+                <div class="bordered-box padded">
+                    <div class="border-bottom">
+                        <span class="flex20">Contact</span>
+                        <span  class="flex80">{{ session.cart['address']['msisdn']  }}</span>
+                    </div>
+                    <div class="border-bottom">
+                        <span class="flex20">Ship to</span>
+                        <span class="flex80">{{ session.cart['address']['address'] }}</span>
+                    </div>
+                    <div>
+                        <span class="flex20">Shipping</span>
+                        <span class="flex80">{{ session.cart['shipping_categories'][session.cart['shipping_cost']]|join(', ') }}</span>
+                    </div>
+                </div>
+                <div class="title">payment method</div>
+                <div class="bordered-box">
+                    <div class="">
+                        <span class="flex10"><input type="radio" name="payment-method" id="" value="PAYSTACK"></span>
+                        <span  class="flex80">
+                            <img src="\assets\images\paystack.png" alt="" class="payment-img">
+                        </span>
+                        <span  class="flex10">₦{{ session.cart['payment_methods']['PAYSTACK'] }}</span>
+                    </div>
+                </div>
+                <div class="title">billing address</div>
+                <div class="bordered-box">
+                    <div class="border-bottom">
+                        <span class="flex10"><input type="radio" name="billing-address" id="" value="{{ session.cart['address_id'] }}"></span>
+                        <span  class="flex90">Same as shipping address</span>
+                    </div>
+                    <div class="flex-row wrap">
+                        <span class="flex10"><input type="radio" name="billing-address" id="" value="0"></span>
+                        <span  class="flex90">Use a different billing address</span>
+                        <span class="flex10"></span>
+                        <select name="billing-address" id="billing-address" class="form-input flex90 hide">
+                            <option value="" default>Select billing address</option>
+                            {% for index, address in addresses %}
+                                <option value="{{ address['id'] }}">{{ address['address']|slice(0,84) }}{{ (address['address']|length > 84) ? '...' : '' }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group flex-row spaceb">
+                    <a href="/cart/shipping"><i class="fa fa-angle-left"></i> &nbsp; Return to shipping</a>
+                    <a id="payment-submit-btn" billing-address="0" payment-method="" payment-request-id="" payment-order-ref="" href="javascript:void(0)" class="fill btn sm">pay now</a>
+                </div>
+            </div>
+            
+    </div>
+    {{ include('checkout-products.html') }}
+</section>
+{% endblock %}
+{% block foot %}
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    window.payWithPaystack = function(ref, order_ref, amount, email){
+        var handler = PaystackPop.setup({
+        key: 'pk_test_418a5ba534258e21b4d4b68630d25414dd2a8bf0',
+        email: email,
+        amount: parseInt(amount)*100,
+        currency: "NGN",
+        ref: ref,
+        channels: ['card','bank'],
+        // ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        metadata: {
+            custom_fields: []
+        },
+        callback: function(response){
+            window.show_alert('Payment successfull ', 'success');
+            window.location = '/order/completed/'+ref+'/'+order_ref+'?status=failed'
+        },
+        onClose: function(){
+            window.show_alert('Payment cancelled', 'danger');
+            window.location = '/order/completed/'+ref+'/'+order_ref+'?status=failed'
+        }
+        });
+        handler.openIframe();
+    }
+</script>
+<script src="/assets/form.js"></script>
+{% endblock %}

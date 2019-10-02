@@ -1,0 +1,65 @@
+{% extends "app.html" %}
+
+{% block title %}Order Details{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="breadcrumbs">
+      <span class="breadcrumb"><a href="/">Home</a></span>
+      <span class="breadcrumb"><a href="/account/dashboard">Account</a></span>
+      <span class="breadcrumb"><a href="/account/orders">Orders</a></span>
+      <span class="breadcrumb"><a href="javascript:void(0)">Order Details</a></span>
+    </div>
+    <div class="d-flex spaceb flex-row aligncen">
+        <div class="title">
+            ORDER DETAILS
+        </div>
+    </div>
+    <div class="bordered-box bordered-top-box flex100">
+          <div class="d-flex flex-row spaceb aligncen">
+              <small>Orders</small>
+              
+              <div>
+                  <!-- <a href="specialorder.html" class="btn xsm fill">make a special order</a> -->
+                  <a href="/account/orders" class="btn xsm fill">view all orders</a>
+              </div>
+          </div>
+          {% if order_detail|length > 0 %}
+          <div class="d-flex flex-row spaceb">
+              <table class="order-table">
+                  <thead>
+                      <tr>
+                          <th>Order Ref</th>
+                          <th>Status</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                        {% for index, order in order_detail %}
+                            <tr>
+                                <td>{{  order['order_ref'] }}</td>
+                                <td>{{  order['status'] }}</td>
+                                <td>₦{{  order['total_amount'] }}</td>
+                                <td>{{  order['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                <td><a href="/account/orders/{{order['id']}}" class="btn xsm fill">details</a></td>
+                            </tr>
+                        {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          {% endif %}
+          {% if order_detail|length == 0 %}
+          <div class="d-flex flex-row spaceb">
+              <span>You haven't placed any orders yet.</span>
+          </div>
+          {% endif %}
+      </div>
+  </div>
+  </section>
+{% endblock %}
+{% block foot %}
+{% endblock %}

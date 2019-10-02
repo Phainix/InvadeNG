@@ -1,0 +1,75 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Materials{% endblock %}
+
+{% block content %}
+<section class="row">
+    <div class="col-sm-12">
+        <section class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <h3 class="card-title">Inputs</h3>
+                        <form enctype="multipart/form-data" class="form material-form" action="/backend/account/materials/manage" novalidate method="post">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="material-name" class="form-control" value="{{ material.name }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Price</label>
+                                <div class="col-md-9">
+                                    <input type="number" name="material-price" class="form-control" value="{{ material.price }}">
+                                </div>
+                            </div>
+                            {% if material_id != 0 %}
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Sale Price</label>
+                                    <div class="col-md-9">
+                                        <input type="number" name="material-sale-price" class="form-control" value="{{ material.sale_price }}">
+                                    </div>      
+                                </div>
+                            {% endif %}
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Picture</label>
+                                <div class="col-md-9">
+                                    <input type="file" name="material-picture" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-froup row">
+                                <span class="col-md-3"></span>
+                                <span class="col-md-9">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ material_id == 0 ? 'Create' : 'Edit' }}</button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                            <input type="hidden" name="material_id" value="{{ material_id }}">
+                            
+                            <!-- <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Valid Input</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control is-valid" id="inputHorizontalSuccess">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Danger</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control is-invalid" id="inputHorizontalDnger">
+                                    <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+                                    <small class="form-text text-muted">Example help text that remains unchanged.</small></div>
+                                    <span class="help-block">Email invalid please try again.</span>
+                            </div> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 mt-1 mb-4"><small> Template by <a href="https://www.medialoot.com">Medialoot</a></small></div>
+        </section>
+    </div>
+</section>
+{% endblock %}

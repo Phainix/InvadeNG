@@ -1,0 +1,344 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <section class="row">
+        <div class="col-sm-12">
+            <section class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="card mb-4 ">
+                        <div class="card-block">
+                            <h3 class="card-title">Banners</h3>
+                            <div class="dropdown card-title-btn-container">
+                                <a class="btn btn-sm btn-subtle" href="/backend/account/settings/banners/manage/"><em class="fa fa-list-ul"></em> New Banner</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Picture</th>
+                                            <th>Date Created</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for banner in banners %}
+                                            <tr>
+                                                <td>{{ banner['title'] }}</td>
+                                                <td><img class="img-thumbnail table-img" src="{{ banner['image'] }}"></td>
+                                                <td>{{ banner['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                                <td><span class="badge badge-{{ banner['status'] == 1 ? 'success' : 'danger' }}">{{ banner['status'] == 1 ? 'Active' : 'Inactive' }}</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em> Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="/backend/account/settings/banners/manage/{{ banner['id'] }}"><em class="fa fa-pencil-alt mr-1"></em> Edit</a>
+                                                        <a class="dropdown-item" href="/backend/account/settings/banners/delete/{{ banner['id'] }}"><em class="fa fa-times-circle mr-1"></em> Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        {% if banners|length == 0 %}
+                                            <tr>
+                                                <td class="text-center" colspan="5">No data available in table</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <h3 class="card-title">Pages</h3>
+                            <div class="dropdown card-title-btn-container">
+                                <a class="btn btn-sm btn-subtle" href="/backend/account/settings/pages/manage/"><em class="fa fa-list-ul"></em> New Page</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Link</th>
+                                            <th>Date Created</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for page in pages %}
+                                            <tr>
+                                                <td>{{ page['title'] }}</td>
+                                                <td>{{ page['link'] }}</td>
+                                                <td>{{ page['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em> Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="/backend/account/settings/pages/manage/{{ page['id'] }}"><em class="fa fa-pencil-alt mr-1"></em> Edit</a>
+                                                        {% if page['app_default'] == 0 %}
+                                                            <a class="dropdown-item" href="/backend/account/settings/pages/delete/{{ page['id'] }}"><em class="fa fa-times-circle mr-1"></em> Delete</a>
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 ">
+                        <div class="card-block">
+                            <h3 class="card-title">Shipping Methods</h3>
+                            <div class="dropdown card-title-btn-container">
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="data_table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <!-- <th>Country</th> -->
+                                            <th>State</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for shipping_method in shipping_methods %}
+                                            <tr>
+                                                <td>{{ 38 - shipping_method['id'] }}</td>
+                                                <td>{{ shipping_method['type'] }}</td>
+                                                <!-- <td>{{ shipping_method['country'] }}</td> -->
+                                                <td>{{ shipping_method['state'] }}</td>
+                                                <td>
+                                                    <form class="settings-form" action="/backend/account/settings/shipping/{{ shipping_method['id'] }}" name="shipping{{ shipping_method['id'] }}">
+                                                        <div class="input-group">
+                                                            <input id="settings-shipping" type="number" class="form-control input-md" placeholder="Add shipping price" name="content" value="{{ shipping_method['price'] }}"/>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                            </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <h3 class="card-title">App Data</h3>
+                            <div class="dropdown card-title-btn-container">
+                                <!-- <button class="btn btn-sm btn-subtle" type="button"><em class="fa fa-list-ul"></em> View All</button>
+                                <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em></button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#"><em class="fa fa-search mr-1"></em> More info</a>
+                                    <a class="dropdown-item" href="#"><em class="fa fa-thumb-tack mr-1"></em> Pin Window</a>
+                                    <a class="dropdown-item" href="#"><em class="fa fa-remove mr-1"></em> Close Window</a></div> -->
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">settings</h6>
+                            <div class="divider" style="margin-top: 1rem;"></div>
+                            <div class="articles-container">
+                                <div class="article border-bottom">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fa fa-phone"></em></div>
+                                                <div class="text-muted">phone</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['phone']['identifier'] }}" name="phone">
+                                                    <div class="input-group">
+                                                        <input id="settings-phone" type="text" class="form-control input-md" placeholder="Add phone number" name="content" value="{{ settings['phone']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+                                
+                                <div class="article">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fab fa-whatsapp"></em></div>
+                                                <div class="text-muted">whatsapp</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['whatsapp']['identifier'] }}" name="whatsapp">
+                                                    <div class="input-group">
+                                                        <input id="settings-whatsapp" type="text" class="form-control input-md" placeholder="Add whatsapp number" name="content" value="{{ settings['whatsapp']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+
+
+                                <div class="article">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fa fa-envelope"></em></div>
+                                                <div class="text-muted">email</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['email']['identifier'] }}" name="email">
+                                                    <div class="input-group">
+                                                        <input id="settings-email" type="text" class="form-control input-md" placeholder="Add email" name="content" value="{{ settings['email']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+
+                                <div class="article">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fab fa-instagram"></em></div>
+                                                <div class="text-muted">instagram</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['instagram']['identifier'] }}" name="instagram">
+                                                    <div class="input-group">
+                                                        <input id="settings-instagram" type="text" class="form-control input-md" placeholder="Add instagram link" name="content" value="{{ settings['instagram']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+
+                                <div class="article">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fab fa-facebook"></em></div>
+                                                <div class="text-muted">facebook</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['facebook']['identifier'] }}" name="facebook">
+                                                    <div class="input-group">
+                                                        <input id="settings-facebook" type="text" class="form-control input-md" placeholder="Add facebook link" name="content" value="{{ settings['facebook']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+
+                                <div class="article">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-3 date">
+                                                <div class="large"><em class="fab fa-twitter"></em></div>
+                                                <div class="text-muted">twitter</div>
+                                            </div>
+                                            <div class="col-9">
+                                                <form class="settings-form" action="/backend/account/settings/update/{{ settings['twitter']['identifier'] }}" name="twitter">
+                                                    <div class="input-group">
+                                                        <input id="settings-twitter" type="text" class="form-control input-md" placeholder="Add twitter link" name="content" value="{{ settings['twitter']['content'] }}"/>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary btn-md radius-sm" id="btn-todo">Update</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--End .article-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <h3 class="card-title">Images</h3>
+                            <div class="image-container">
+                                {% for image in images %}
+                                    <a href="{{ image['link'] }}" target="blank"><img class="img-thumbnail table-img" src="{{ image['link'] }}"></a>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer todo-list-footer">
+                                <form enctype="multipart/form-data" class="image-form" action="/backend/account/settings/images" novalidate method="post">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <button type="submit" class="btn btn-primary btn-md" id="btn-todo">Upload</button>
+                                        </span>
+                                        <input id="btn-input" type="file" class="form-control input-md" name="file"/><span class="input-group-btn">
+                                        </span>
+                                    </div>
+                                    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <h3 class="card-title">Business Categories</h3>
+                            <h6 class="card-subtitle mb-2 text-muted"></h6>
+                            <ul class="todo-list mt-2 mb-2">
+                                
+                                {% for category in business_categories %}
+                                <li class="todo-list-item">
+                                    <div class="checkbox mt-1 mb-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input checkbox-toggle" id="customCheck{{ category['id'] }}" {{ category['status'] == 2 ? 'checked' : '' }} data-toggle-link="/backend/account/settings/business_categories/toggle/{{ category['id'] }}/{{ category['status'] == 1 ? '2' : '1' }}">
+                                            <label class="custom-control-label custom-control-description" for="customCheck{{ category['id'] }}">{{ category['name'] }}</label>
+                                        <div class="float-right action-buttons"><a href="/backend/account/settings/business_categories/delete/{{ category['id'] }}" class="trash"><em class="fa fa-trash"></em></a></div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            <div class="card-footer todo-list-footer">
+                                <form class="category-form" action="/backend/account/settings/business_categories" novalidate method="post">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <button type="submit" class="btn btn-primary btn-md" id="btn-todo">Add</button>
+                                        </span>
+                                        <input id="btn-input" type="text" class="form-control input-md" placeholder="Add new business category" name="category"/><span class="input-group-btn">
+                                        </span>
+                                    </div>
+                                    <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                                    <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-12 mt-1 mb-4">Template by <a href="https://www.medialoot.com">Medialoot</a></div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

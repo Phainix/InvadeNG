@@ -1,0 +1,64 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Banners{% endblock %}
+
+{% block content %}
+<section class="row">
+    <div class="col-sm-12">
+        <section class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <h3 class="card-title">Inputs</h3>
+                        <form enctype="multipart/form-data" class="form banner-form" action="/backend/account/settings/banners/manage" novalidate method="post">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Title</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="banner-title" class="form-control" value="{{ banner.title }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Description</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="banner-desc" class="form-control" value="{{ banner.description }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Link</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="banner-link" class="form-control" value="{{ banner.link ?: 'javascript:void(0)' }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Button Text</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="banner-btn-text" class="form-control" value="{{ banner.btn_text ?: 'SHOP NOW' }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Picture</label>
+                                <div class="col-md-9">
+                                    <input type="file" name="banner-picture" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-froup row">
+                                <span class="col-md-3"></span>
+                                <span class="col-md-9">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ banner_id == 0 ? 'Create' : 'Edit' }}</button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                            <input type="hidden" name="banner_id" value="{{ banner_id }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 mt-1 mb-4"><small> Template by <a href="https://www.medialoot.com">Medialoot</a></small></div>
+        </section>
+    </div>
+</section>
+{% endblock %}

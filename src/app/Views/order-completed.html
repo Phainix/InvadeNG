@@ -1,0 +1,50 @@
+{% extends "app.html" %}
+
+{% block title %}Order Completed{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+        <div class="breadcrumbs">
+          <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+          <span class="breadcrumb"><a href="javascript:void(0)">Order</a></span>
+        </div>
+        <div class="basic-container">
+              <div class="title">
+                Order Completed
+              </div>
+              <div class="about-container">
+                    {% if(tech_issue == true) %}
+                        <div class="center">
+                            <h2>Order Ref: {{ order_ref }}</h2>
+                            <span class="order-icon failed">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </div>
+                        <h2>Your order could not be processed successfuly due to a technical issue, please refresh this page and contact the admin via email (<a href="mailto:admin@invade.ng">admin@invade.ng</a>) if this issue persists.</h2>
+                       
+                    {% endif %}
+
+                    {% if(tech_issue == false) %}
+                        <div class="center">
+                            <h2>Order Ref: {{ order_ref }}</h2>
+                            <span class="order-icon {{  status == 'SUCCESS' ? 'success' : 'failed' }}">
+                                <i class="fa {{  status == 'SUCCESS' ? 'fa-check' : 'fa-times' }}"></i>
+                            </span>
+                        </div>
+                        {% if(status == 'SUCCESS') %}
+                            <h2 class="center">Your order has been processed successfuly. Visit the <a class="text-success" href="/account/orders">All Orders</a> page to view and track its status</h2>
+                        {% endif %}
+
+                        {% if(status != 'SUCCESS') %}
+                            <h2 class="center">Your order could not be processed successfuly. Please try again</h2>
+                        {% endif %}
+                       
+                    {% endif %}
+              </div>
+        </div>
+      </section>
+{% endblock %}
+{% block foot %}
+{% endblock %}

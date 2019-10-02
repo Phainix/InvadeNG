@@ -1,0 +1,52 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Pages{% endblock %}
+
+{% block content %}
+<section class="row">
+    <div class="col-sm-12">
+        <section class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <h3 class="card-title">Inputs</h3>
+                        <form class="form page-form" action="/backend/account/settings/pages/manage" novalidate method="post">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Title</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="page-title" class="form-control" value="{{ page.title }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Link</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="page-link" class="form-control" value="{{ page.link }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Content</label>
+                                <div class="col-md-9">
+                                    <textarea id="summernote" name="page-content" rows="10">{{ page.content }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-froup row">
+                                <span class="col-md-3"></span>
+                                <span class="col-md-9">
+                                    <button type="submit" class="btn btn-lg btn-primary">{{ page_id == 0 ? 'Create' : 'Edit' }}</button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                            <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                            <input type="hidden" name="page_id" value="{{ page_id }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-12 mt-1 mb-4"><small> Template by <a href="https://www.medialoot.com">Medialoot</a></small></div>
+        </section>
+    </div>
+</section>
+{% endblock %}

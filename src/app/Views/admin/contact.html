@@ -1,0 +1,42 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <section class="row">
+        <div class="col-sm-12">
+            <section class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card mb-12 ">
+                        <div class="card-block">
+                            <h3 class="card-title">Contact Requests</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="data_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for contact in contacts %}
+                                            <tr>
+                                                <td>{{ contact['name'] }}</td>
+                                                <td>{{ contact['email'] }}</td>
+                                                <td>{{ contact['message'] }}</td>
+                                                <td>{{ contact['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

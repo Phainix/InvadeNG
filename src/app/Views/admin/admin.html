@@ -1,0 +1,43 @@
+{{ include('admin/head.html') }}
+	<div class="container-fluid" id="wrapper">
+		<div class="row">
+            <nav class="sidebar col-xs-12 col-sm-3 col-lg-2 col-xl-2">
+				<h1 class="site-title"><a href="/backend/account/dashboard"><img class="img-fluid" src="/assets/images/InvadelogoWhite.png" alt=""></a></a></h1>
+													
+				<a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
+				<ul class="nav nav-pills flex-column sidebar-nav">
+					<!-- <li class="nav-item"><a class="nav-link active" href="/backend/account/dashboard"><em class="fa fa-dashboard"></em> Dashboard <span class="sr-only">(current)</span></a></li> -->
+					<li class="nav-item"><a class="nav-link" href="/backend/account/users"><em class="fa fa-user"></em> Users</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/measurements"><em class="fa fa-pen-square"></em> Measurements</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/categories"><em class="fa fa-clone"></em> Categories</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/materials"><em class="fa fa-cut"></em> Materials</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/designs"><em class="fa fa-tshirt"></em> Designs</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/settings"><em class="fa fa-cog"></em> Settings</a></li>
+					<li class="nav-item"><a class="nav-link" href="/backend/account/contactus"><em class="fa fa-chat"></em> Contact</a></li>
+					<li class="nav-item"><a class="nav-link" href="cards.html"><em class="fa fa-clone"></em> Cards</a></li>
+				</ul>
+				<a href="/backend" class="logout-button"><em class="fa fa-power-off"></em> Signout</a>
+			</nav>
+			<main class="col-xs-12 col-sm-9 col-lg-10 col-xl-10 pt-3 pl-4 ml-auto">
+				<header class="page-header row justify-center">
+					<div class="col-md-6 col-lg-8" >
+						<h3 class="float-left text-center text-md-left">{% block title %}{% endblock %}</h3>
+					</div>
+					<div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div class="username mt-1">
+							<h5 class="mb-1">{{ session.user['first_name'] }} {{ session.user['last_name'] }}</h5>
+							<h6 class="text-muted">Super Admin</h6>
+						</div>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink"><a class="dropdown-item" href="#"><em class="fa fa-user-circle mr-1"></em> View Profile</a>
+						     <a class="dropdown-item" href="#"><em class="fa fa-sliders mr-1"></em> Preferences</a>
+						     <a class="dropdown-item" href="/backend"><em class="fa fa-power-off mr-1"></em> Logout</a></div>
+					</div>
+					<div class="clear"></div>
+				</header>
+				{% block content %}
+                {% endblock %}
+			</main>
+		</div>
+	</div>
+{{ include('admin/foot.html') }}

@@ -1,0 +1,78 @@
+{% extends "admin/admin.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+    <section class="row">
+        <div class="col-sm-12">
+            <section class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card mb-12 ">
+                        <div class="card-block">
+                            <h3 class="card-title">User accounts</h3>
+                            <div class="dropdown card-title-btn-container">
+                                <!-- <button class="btn btn-sm btn-subtle" type="button"><em class="fa fa-list-ul"></em> New User</button> -->
+                                <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em> Filter </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item table-toggle" href="javascript:void(0)" data-toggle="super admin"><em class="fa fa-users mr-1"></em> Admins</a>
+                                    <a class="dropdown-item table-toggle" href="javascript:void(0)" data-toggle="designer"><em class="fa fa-cut mr-1"></em> Designers</a>
+                                    <a class="dropdown-item table-toggle" href="javascript:void(0)" data-toggle="normal user"><em class="fa fa-user mr-1"></em> Users</a>
+                                    <a class="dropdown-item table-toggle" href="javascript:void(0)" data-toggle=""><em class="fa fa-remove mr-1"></em> Clear filter</a></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="data_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Msisdn</th>
+                                            <th>Type</th>
+                                            <th>Date Joined</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+                                            <tr>
+                                                <td>{{ user['first_name'] }} {{ user['last_name'] }}</td>
+                                                <td>{{ user['email'] }}</td>
+                                                <td>{{ user['msisdn'] }}</td>
+                                                <td><span class="badge badge-{{ user['user_type'] == 1 ? 'info' : (user['user_type'] == 2 ? 'warning' : 'success') }}">{{ user['user_type'] == 1 ? 'Super Admin' : (user['user_type'] == 2 ? 'Designer' : 'Normal User') }}</span></td>
+                                                <td>{{ user['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                                <td><span class="badge badge-{{ user['status'] == 1 ? 'success' : 'danger' }}">{{ user['status'] == 1 ? 'Active' : 'Inactive' }}</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-subtle dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><em class="fa fa-cog"></em> Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                        {% if(user['status'] == 1) %}
+                                                            <a class="dropdown-item" href="/backend/account/users/status/2/{{ user['id'] }}"><em class="fa fa-remove mr-1"></em> Disable</a>
+                                                        {% endif %}
+                                                        {% if(user['status'] == 2) %}
+                                                            <a class="dropdown-item" href="/backend/account/users/status/1/{{ user['id'] }}"><em class="fa fa-check mr-1"></em> Enable</a>
+                                                        {% endif %}
+                                                        {% if(user['user_type'] == 2) %}
+                                                            <a class="dropdown-item" href="#"><em class="fa fa-search mr-1"></em> More info</a>
+                                                        {% endif %}
+                                                        {% if(user['id'] != session.user['id']) %}
+                                                            {% if(user['user_type'] == 1) %}
+                                                                <a class="dropdown-item" href="/backend/account/users/type/3/{{ user['id'] }}"><em class="fa fa-step-backward mr-1"></em> Downgrade to user</a>
+                                                            {% endif %}
+                                                            {% if(user['user_type'] == 3) %}
+                                                                <a class="dropdown-item" href="/backend/account/users/type/1/{{ user['id'] }}"><em class="fa fa-step-forward mr-1"></em> Upgrade to admin</a>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

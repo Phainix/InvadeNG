@@ -1,0 +1,110 @@
+{% extends "app.html" %}
+
+{% block title %}Contact Us{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+        <div class="breadcrumbs">
+          <span class="breadcrumb"><a href="/">Home</a></span>
+          <span class="breadcrumb"><a href="javascript:void(0)">Contact Us</a></span>
+        </div>
+        <div class="contact-container">
+            <div class="contacts">
+                  <div class="title">CONTACTS</div>
+                  <!-- <div class="contacts-item">
+                      <span class="contacts-icon"><i class="fa fa-home"></i></span>
+                      <div class="contacts-desc">
+                          <b>ADDRESS</b>
+                          <span>7563 St. Vicent Place, Glasgow</span>
+                      </div>
+                  </div> -->
+                  <div class="contacts-item">
+                      <span class="contacts-icon"><i class="fa fa-phone"></i></span>
+                      <div class="contacts-desc">
+                          <b>PHONE</b>
+                          <span>{{ settings['phone']['content'] }}</span>
+                      </div>
+                  </div>
+                  <div class="contacts-item">
+                      <span class="contacts-icon"><i class="fa fa-whatsapp"></i></span>
+                      <div class="contacts-desc">
+                          <b>WHATSAPP</b>
+                          <span>{{ settings['whatsapp']['content'] }}</span>
+                      </div>
+                  </div>
+                  <div class="contacts-item">
+                      <span class="contacts-icon"><i class="fa fa-envelope-o"></i></span>
+                      <div class="contacts-desc">
+                          <b>EMAIL</b>
+                          <span>{{ settings['email']['content'] }}</span>
+                      </div>
+                  </div>
+                  <div class="contacts-item">
+                      <span class="contacts-icon"><i class="fa fa-clock-o"></i></span>
+                      <div class="contacts-desc">
+                          <b>HOURS</b>
+                          <span>7 Days a week from 10:00 am to 6:00 pmt</span>
+                      </div>
+                  </div>
+            </div>
+            <div class="getintouch">
+                  <div class="title">GET IN TOUCH WITH US</div>
+                  <form action="/contactus" method="post" class="contact-form" novalidate>
+                      <div class="input-group">
+                          <label for="contact-name">Name</label>
+                          <input
+                              type="text"
+                              name="contact-name"
+                              id="contact-name"
+                              class="form-input"
+                          />
+                      </div>
+                      <div class="input-group">
+                          <label for="contact-email">Email Address</label>
+                          <input
+                              type="email"
+                              name="contact-email"
+                              id="contact-email"
+                              class="form-input"
+                          />
+                      </div>
+                      <div class="input-group">
+                          <label for="contact-message">What’s on your mind?</label>
+                          <textarea class="form-input" name="contact-message" id="contact-message" cols="30" rows="6"></textarea>
+                      </div>
+                      <div class="input-group flex-row">
+                          <button class="fill btn">SUBMIT</button>
+                      </div>
+                      <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+                      <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+                  </form>
+            </div>
+            <div class="follow">
+                  <div class="title">FOLLOW US</div>
+                  <a class="contacts-item" href="{{ settings['facebook']['content'] }}">
+                      <span class="contacts-icon"><i class="fa fa-facebook"></i></span>
+                      <sppan class="contacts-desc">
+                          <b>FOLLOW US ON FACEBOOK</b>
+                      </span>
+                    </a>
+                  <a class="contacts-item" href="{{ settings['twitter']['content'] }}">
+                      <span class="contacts-icon"><i class="fa fa-twitter"></i></span>
+                      <span class="contacts-desc">
+                          <b>FOLLOW US ON TWITTER</b>
+                      </span>
+                    </a>
+                  <a class="contacts-item" href="{{ settings['instagram']['content'] }}">
+                      <span class="contacts-icon"><i class="fa fa-instagram"></i></span>
+                      <span class="contacts-desc">
+                          <b>FOLLOW US ON INSTAGRAM</b>
+                      </span>
+                    </a>
+            </div>
+        </div>
+      </section>
+{% endblock %}
+{% block foot %}
+    <script src="/assets/form.js"></script>
+{% endblock %}

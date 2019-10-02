@@ -1,0 +1,119 @@
+{% extends "app.html" %}
+
+{% block title %}Measurement{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+    <section class="main-content">
+    <div class="basic-container d-flex flex-row wrap aligncen">
+          <div class="title mt2 flex100">
+            {% apply upper %}
+                WELCOME {{ session.user['first_name'] }} {{ session.user['last_name'] }}
+            {% endapply %}
+          </div>
+          <form action="/account/measurement" method="post" class="flex50 flex100sm measurement-form" novalidate>
+              <!-- <div class="input-group flex-row wrap spaceb">
+                  <label for="username" class="flex100">Username</label>
+                  <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      class="form-input flex47-5"
+                      placeholder="Lorem I"
+                  />
+              </div> -->
+              <div class="title">measurement (in inches)</div>
+              {% for title, mm in measurements %}
+                    <div class="title">{% apply lower %} {{ title }} {% endapply %}</div>
+                    <div class="input-group flex-row spaceb alignini wrap">
+                        {% for m in mm %}
+                            <div class="input-group flex47-5 flex100sm d-flex flex-column">
+                                <label for="{{ m.name }}">{{ m.name }}</label>
+                                <input
+                                    type="number"
+                                    name="{{ m.name }}"
+                                    id="{{ m.name }}"
+                                    class="form-input measurement-input"
+                                    placeholder="{{ m.name }}"
+                                    value="{{ user_measurement[m.name] }}"
+                                />
+                            </div>
+                        {% endfor %}
+                    </div>
+              {% endfor %}
+              <input type="hidden" name="{{ csrf.getTokenNameKey() }}" value="{{ csrf.getTokenName() }}">
+              <input type="hidden" name="{{ csrf.getTokenValueKey() }}" value="{{ csrf.getTokenValue() }}">
+              <input type="hidden" name="measurement_id" value="{{ measurement_id }}">
+              <!-- <div class="title">trouser</div>
+              <div class="input-group flex-row spaceb alignini">
+                  <input
+                      type="number"
+                      name="trouser-waist"
+                      id="trouser-waist"
+                      class="form-input flex30"
+                      placeholder="Waist"
+                  />
+                  <input
+                      type="number"
+                      name="lap"
+                      id="lap"
+                      class="form-input flex30"
+                      placeholder="Lap"
+                  />
+                  <input
+                      type="number"
+                      name="knee"
+                      id="knee"
+                      class="form-input flex30"
+                      placeholder="Knee"
+                  />
+              </div>
+              <div class="input-group flex-row spaceb alignini">
+                  <input
+                      type="number"
+                      name="length"
+                      id="length"
+                      class="form-input flex47-5"
+                      placeholder="Length"
+                  />
+                  <input
+                      type="number"
+                      name="rleg"
+                      id="rleg"
+                      class="form-input flex47-5"
+                      placeholder="R-Leg"
+                  />
+              </div>
+              <div class="title">agbada</div>
+              <div class="input-group flex-row spaceb alignini">
+                  <input
+                      type="number"
+                      name="arm"
+                      id="arm"
+                      class="form-input flex47-5"
+                      placeholder="Arm Length (shoulder to arm)"
+                  />
+                  <input
+                      type="number"
+                      name="length"
+                      id="length"
+                      class="form-input flex47-5"
+                      placeholder="Length"
+                  />
+              </div> -->
+              <div class="input-group flex-row spaceb">
+                  <a href="/account/dashboard" class="fill btn sm">go to account</a>
+                  <button type="submit" class="fill btn sm">save and continue</button>
+              </div>
+          </form> 
+      
+          <div class="measurement-img flex50 flex100sm">
+              <img src="/assets\images\measurement.png" alt="">
+          </div>
+      </div>
+    </section>
+{% endblock %}
+{% block foot %}
+    <script src="/assets/form.js"></script>
+{% endblock %}

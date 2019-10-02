@@ -1,0 +1,33 @@
+<div class="checkout-products">
+    <div class="cart-view">
+        {% for index, item in session.cart['items'] %}
+        <div class="cart-view-item">
+            <div class="cart-product">
+                <img class="cart-view-thumb" src="{{ item.design_picture }}" alt="">
+                <div class="cart-view-desc">
+                    <div><b>{{ item.design_name }}</b></div>
+                    <div>Material: {{ item.material_name }}</div>
+                </div>
+            </div>
+            <div class="cart-price">₦{{ item.design_price + item.material_price }}</div>
+        </div>
+        {% endfor %} 
+        <div class="cart-view-item">
+            <div class="cart-product">Subtotal</div>
+            <div class="cart-price">₦{{ session.cart['total'] }}</div>
+        </div>
+        <div class="cart-view-item">
+            <div class="cart-product">Shipping</div>
+            <div class="cart-price cart-shipping-price">{{ session.cart['shipping_cost'] is same as(null)  ? 'Calculated next' : '₦'~(session.cart['shipping_cost'] + session.cart['express_charge']) }}</div>
+        </div>
+        <div class="cart-view-item">
+            <div class="cart-product">Charge</div>
+            <div class="cart-price cart-payment-charge">₦{{ session.cart['charge'] is same as(null)  ? 0 : session.cart['charge'] }}</div>
+        </div>
+        <div class="cart-view-item">
+            <div class="cart-product">Total</div>
+            <div class="cart-price cart-total-price">₦{{ session.cart['total'] + session.cart['shipping_cost'] + session.cart['charge'] + session.cart['express_charge'] }}</div>
+        </div>
+
+    </div>
+</div>

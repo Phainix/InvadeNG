@@ -1,0 +1,137 @@
+{% extends "app.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/style/main.css" />
+{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="breadcrumbs">
+      <span class="breadcrumb"><a href="javascript:void(0)">Home</a></span>
+      <span class="breadcrumb"><a href="javascript:void(0)">Account</a></span>
+    </div>
+    <div class="d-flex spaceb flex-row aligncen">
+        
+        <div class="title">
+            {% apply upper %}
+                WELCOME {{ session.user['first_name'] }} {{ session.user['last_name'] }}
+            {% endapply %}
+        </div>
+
+      <!-- <a href="/login" class="btn xsm bordered black">log out</a> -->
+    </div>
+    <p>
+          From your "My Account" page you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.
+    </p>
+    <div class="d-flex flex-row spaceb wrap">
+      <div class="bordered-box bordered-top-box flex47-5 flex100sm">
+          <div class="d-flex flex-row spaceb aligncen">
+              <small>Account information</small>
+              <div>
+                <a data-toggle="modal" data-target="#edit-details" href="javascript:void(0)" class="btn xsm fill"><i class="fa fa-pencil fa-norm"></i> &nbsp; edit</a>
+                <a data-toggle="modal" data-target="#change-password" href="javascript:void(0)" class="btn xsm fill"><i class="fa fa-lock fa-norm"></i> &nbsp; change password</a>
+              </div>
+          </div>
+          <div class="border-bottom d-flex flex-row spaceb">
+              <span>Name</span>
+              <span>{{ session.user['first_name'] ~ ' ' ~ session.user['last_name'] }}</span>
+          </div>
+          <div class="border-bottom d-flex flex-row spaceb">
+              <span>Email</span>
+              <span>{{ session.user['email'] }}</span>
+          </div>
+          <div class="border-bottom d-flex flex-row spaceb">
+              <span>Phone Number</span>
+              <span>{{ session.user['msisdn'] }}</span>
+          </div>
+          <div class="d-flex flex-row spaceb">
+              <span>Orders</span>
+              <span>{{ orders|length }}</span>
+          </div>
+      </div>
+      <div class="bordered-box bordered-top-box flex47-5 flex100sm">
+          <small>Your address</small>
+          {% if addresses|length == 0 %}
+          <div class="d-flex flex-row spaceb">
+              <span>You haven't set an address yes</span>
+          </div>
+          {% endif %}
+          {% for index, address in addresses %}
+          {% if index <= 1 %}
+            <div class="d-flex flex-row aligncen padd-lr-0">
+                <span><i class="fa fa-home fa-round"></i></span>
+                <span>{{ address['address'] }}</span>
+            </div>
+          {% endif %}
+          {% endfor %}
+          <div class="d-flex flex-row spaceb">
+              <a class="btn xsm fill" href="/account/addresses/">manage addresses</a>
+          </div>
+      </div>
+      <div class="bordered-box bordered-top-box flex100">
+          <div class="d-flex flex-row spaceb aligncen">
+              <small>Orders</small>
+              
+              <div>
+                  <!-- <a href="specialorder.html" class="btn xsm fill">make a special order</a> -->
+                  <a href="/account/orders" class="btn xsm fill">view all orders</a>
+              </div>
+          </div>
+          {% if orders|length > 0 %}
+          <div class="d-flex flex-row spaceb">
+              <table class="order-table">
+                  <thead>
+                      <tr>
+                          <th>Order Ref</th>
+                          <th>Status</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                        {% for index, order in orders %}
+                            <tr>
+                                <td>{{  order['order_ref'] }}</td>
+                                <td>{{  order['status'] }}</td>
+                                <td>₦{{  order['total_amount'] }}</td>
+                                <td>{{  order['date_created']|date('d/m/Y H:i', timezone="Africa/lagos") }}</td>
+                                <td><a href="/account/orders/{{order['id']}}" class="btn xsm fill">details</a></td>
+                            </tr>
+                        {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          {% endif %}
+          {% if orders|length == 0 %}
+          <div class="d-flex flex-row spaceb">
+              <span>You haven't placed any orders yet.</span>
+          </div>
+          {% endif %}
+      </div>
+      <div class="bordered-box bordered-top-box flex47-5 flex100sm">
+        <div class="d-flex flex-row spaceb aligncen">
+            <small>Measurement</small>
+            
+            <div>
+                <a href="/account/measurement" class="btn xsm fill">{{ measurement_id == 0 ? 'create' : 'edit' }}</a>
+            </div>
+        </div>
+        <div class="d-flex flex-row spaceb">
+            {% if(measurement_id == 0) %}
+                <span>You haven't set up your measurements yet.</span>
+            {% endif %}
+
+            <div class="d-flex wrap flex-row">
+                {% for m, mm in user_measurement %}
+                    <span class="badge">{{ m }}: {{ mm }}</span>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+  </div>
+  </section>
+{% endblock %}
+{% block foot %}
+<script src="/assets/form.js"></script>
+{% endblock %}
