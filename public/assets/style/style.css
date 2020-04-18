@@ -1195,3 +1195,9 @@ form.readonly .form-input {
     padding: .5rem;
     cursor: pointer;
 }
+
+.banner-bg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

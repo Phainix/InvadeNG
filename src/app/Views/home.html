@@ -8,7 +8,8 @@
         data-flickity='{ "cellAlign": "left", "contain": true, "wrapAround": true, "fade": false, "pageDots": false }'
       >
         {% for banner in banners %}
-          <div class="carousel-cell banner-item">
+          <div class="carousel-cell banner-item banner-bg" style="
+          background-image: url({{ banner['image'] }});">
             <img
               src="{{ banner['image'] }}"
               alt=""
