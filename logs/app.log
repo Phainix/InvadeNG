@@ -182,3 +182,48 @@
 [2019-07-07 16:09:06] invade-app.ERROR: SELECT orders.*,order_details.design_price,order_details.material_id,order_details.material_price,order_details.design_id FROM orders   JOIN order_details on order_details.order_id = orders.id WHERE orders.user_id = '2' ORDER BY orders.id desc LIMIT 2 0 [] {"uid":"b6f7a7f"}
 [2019-07-07 16:09:32] invade-app.ERROR: SELECT failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '0' at line 1 [] {"uid":"b0b52b9"}
 [2019-07-07 16:09:32] invade-app.ERROR: SELECT orders.*,order_details.design_price,order_details.material_id,order_details.material_price,order_details.design_id FROM orders   JOIN order_details on order_details.order_id = orders.id WHERE orders.user_id = '2' ORDER BY orders.id desc LIMIT 2 0 [] {"uid":"b0b52b9"}
+[2020-04-18 12:41:55] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT failed:  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT * FROM categories  WHERE status = '1' ORDER BY id DESC [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT failed:  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT * FROM materials  WHERE status = '1' ORDER BY id DESC [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT failed:  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT * FROM settings  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT failed:  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT designs.*,categories.name as category,CASE WHEN designs.sale_price = 0 THEN designs.price ELSE designs.sale_price END AS price_edited FROM designs   JOIN categories on categories.id = designs.category_id WHERE designs.status = '1' ORDER BY featured DESC LIMIT 4 OFFSET 0 [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT failed:  [] {"uid":"b2da57b"}
+[2020-04-18 12:41:55] invade-app.ERROR: SELECT * FROM banners  WHERE status = '1' ORDER BY id DESC [] {"uid":"b2da57b"}
+[2020-04-18 12:49:27] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT failed:  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT * FROM categories  WHERE status = '1' ORDER BY id DESC [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT failed:  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT * FROM materials  WHERE status = '1' ORDER BY id DESC [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT failed:  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT * FROM settings  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT failed:  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT designs.*,categories.name as category,CASE WHEN designs.sale_price = 0 THEN designs.price ELSE designs.sale_price END AS price_edited FROM designs   JOIN categories on categories.id = designs.category_id WHERE designs.status = '1' ORDER BY featured DESC LIMIT 4 OFFSET 0 [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT failed:  [] {"uid":"a8ad0b5"}
+[2020-04-18 12:49:27] invade-app.ERROR: SELECT * FROM banners  WHERE status = '1' ORDER BY id DESC [] {"uid":"a8ad0b5"}
+[2020-04-18 12:50:16] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT failed:  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT * FROM categories  WHERE status = '1' ORDER BY id DESC [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT failed:  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT * FROM materials  WHERE status = '1' ORDER BY id DESC [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT failed:  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT * FROM settings  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT failed:  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT designs.*,categories.name as category,CASE WHEN designs.sale_price = 0 THEN designs.price ELSE designs.sale_price END AS price_edited FROM designs   JOIN categories on categories.id = designs.category_id WHERE designs.status = '1' ORDER BY featured DESC LIMIT 4 OFFSET 0 [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: DB Connection failed: No such file or directory [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT failed:  [] {"uid":"c3788aa"}
+[2020-04-18 12:50:16] invade-app.ERROR: SELECT * FROM banners  WHERE status = '1' ORDER BY id DESC [] {"uid":"c3788aa"}
