@@ -195,6 +195,13 @@ class Model {
         $dbname = "invade";
         // ******* Local *********
 
+        // ******* Heroku *********
+        $servername = "us-cdbr-iron-east-01.cleardb.net";
+        $username = "bc7821161005a0";
+        $password = "1c6e9a4a";
+        $dbname = "heroku_b50c3839590bc9f";
+        // ******* Heroku *********
+
         // Create connection
         $this->conn = new \mysqli($servername, $username, $password, $dbname);
 
